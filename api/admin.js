@@ -1,7 +1,12 @@
 export default function handler(req, res) {
   const envPassword = process.env.ADMIN_PASSWORD || process.env.PASSWORD;
+  const envPin = process.env.ADMIN_PIN || process.env.PIN;
 
-  // Helper to parse cookies from request headers
+  // Strict security headers
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+
   const cookies = {};
   const cookieHeader = req.headers.cookie;
   if (cookieHeader) {
@@ -12,7 +17,11 @@ export default function handler(req, res) {
   }
 
   if (req.method === 'GET') {
-    return res.status(200).json({ setup_required: false, configured: !!envPassword });
+    return res.status(200).json({ 
+      setup_required: false, 
+      configured: !!envPassword, 
+      pin_required: !!envPin 
+    });
   }
 
   if (req.method === 'POST') {
@@ -23,37 +32,40 @@ export default function handler(req, res) {
 
     const action = body.action;
 
-    // 1. LOGIN ACTION
+    // LOGIN ACTION WITH 2FA PIN SUPPORT
     if (action === 'login') {
-      const submittedPass = body.password || body.pass || body.key || body.pw;
+      const submittedPass = body.password || body.pass;
+      const submittedPin = body.pin || body.key;
 
       if (!envPassword) {
-        return res.status(401).json({ ok: false, error: "Server password not configured in Vercel environment variables." });
+        return res.status(401).json({ ok: false, error: "Server password not configured in Vercel." });
       }
 
-      if (submittedPass === envPassword) {
-        // Set secure HTTP-only session cookie valid for 1 day
+      const passValid = submittedPass === envPassword;
+      const pinValid = !envPin || submittedPin === envPin;
+
+      if (passValid && pinValid) {
+        // 30-minute strict session cookie (1800 seconds)
         res.setHeader(
           'Set-Cookie',
-          'admin_session=authenticated; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=86400'
+          'admin_session=authenticated; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=1800'
         );
-        return res.status(200).json({ ok: true, success: true, message: "Logged in successfully" });
+        return res.status(200).json({ ok: true, success: true });
       } else {
-        return res.status(401).json({ ok: false, error: "Invalid password" });
+        return res.status(401).json({ ok: false, error: "Invalid password or PIN." });
       }
     }
 
-    // 2. LOGOUT ACTION
+    // LOGOUT ACTION
     if (action === 'logout') {
-      // Clear the session cookie
       res.setHeader(
         'Set-Cookie',
-        'admin_session=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; HttpOnly; Secure; SameSite=Lax'
+        'admin_session=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; HttpOnly; Secure; SameSite=Strict'
       );
       return res.status(200).json({ ok: true });
     }
 
-    // 3. PROTECTED ACTIONS (load, save, etc.) require valid session cookie
+    // PROTECTED ACTIONS REQUIRE VALID SESSION COOKIE
     if (cookies.admin_session !== 'authenticated') {
       return res.status(401).json({ ok: false, error: "Unauthorized session" });
     }
