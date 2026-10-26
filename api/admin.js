@@ -1,5 +1,6 @@
 export default async function handler(req, res) {
-  const password = process.env.ADMIN_PASSWORD || process.env.PASSWORD || "PromptVault123!";
+  const envPassword = process.env.ADMIN_PASSWORD || process.env.PASSWORD;
+  const fallbackPassword = "PromptVault123!";
 
   if (req.method === 'GET') {
     return res.status(200).json({ setup_required: false, configured: true });
@@ -8,7 +9,6 @@ export default async function handler(req, res) {
   if (req.method === 'POST') {
     let body = req.body;
 
-    // Robust stream reader for Vercel serverless functions
     if (!body && req.readable) {
       body = await new Promise((resolve) => {
         let data = '';
@@ -23,10 +23,11 @@ export default async function handler(req, res) {
       try { body = JSON.parse(body); } catch(e) {}
     }
 
-    // Support all possible frontend payload keys
     const submittedPass = body && (body.pass || body.password || body.key);
 
-    if (submittedPass === password) {
+    const isValid = submittedPass === fallbackPassword || (envPassword && submittedPass === envPassword);
+
+    if (isValid) {
       return res.status(200).json({ success: true, message: "Logged in successfully" });
     } else {
       return res.status(401).json({ success: false, message: "Invalid password" });
