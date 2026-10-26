@@ -1,4 +1,4 @@
-export default async function handler(req, res) {
+export default function handler(req, res) {
   const envPassword = process.env.ADMIN_PASSWORD || process.env.PASSWORD;
   const fallbackPassword = "PromptVault123!";
 
@@ -7,23 +7,14 @@ export default async function handler(req, res) {
   }
 
   if (req.method === 'POST') {
-    let body = req.body;
-
-    if (!body && req.readable) {
-      body = await new Promise((resolve) => {
-        let data = '';
-        req.on('data', chunk => { data += chunk; });
-        req.on('end', () => {
-          try { resolve(JSON.parse(data)); } catch(e) { resolve({ raw: data }); }
-        });
-      });
-    }
-
+    let body = req.body || {};
+    
     if (typeof body === 'string') {
       try { body = JSON.parse(body); } catch(e) {}
     }
 
-    const submittedPass = body && (body.pass || body.password || body.key);
+    // Match the frontend's exact payload: body.password
+    const submittedPass = body.password || body.pass || body.key || body.pw;
 
     const isValid = submittedPass === fallbackPassword || (envPassword && submittedPass === envPassword);
 
