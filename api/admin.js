@@ -10,9 +10,11 @@ export default function handler(req, res) {
     if (typeof body === 'string') {
       try { body = JSON.parse(body); } catch(e) {}
     }
-    const pass = body && body.pass;
-    if (pass === password) {
-      return res.status(200).json({ success: true });
+    // Accept both 'pass' and 'password' from any frontend version
+    const submittedPass = body && (body.pass || body.password);
+    
+    if (submittedPass === password) {
+      return res.status(200).json({ success: true, message: "Logged in successfully" });
     } else {
       return res.status(401).json({ success: false, message: "Invalid password" });
     }
