@@ -1,11 +1,19 @@
+import crypto from 'crypto';
+
 export default function handler(req, res) {
   const envPassword = process.env.ADMIN_PASSWORD || process.env.PASSWORD;
-  const envPin = process.env.ADMIN_PIN || process.env.PIN;
+  const envPin = process.env.ADMIN_PIN || process.env.PIN || '';
 
   // Strict security headers
   res.setHeader('X-Frame-Options', 'DENY');
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('X-XSS-Protection', '1; mode=block');
+
+  // Generate a secret server salt based on current credentials
+  const getSessionToken = () => {
+    if (!envPassword) return '';
+    return crypto.createHmac('sha256', envPassword + envPin).update('promptvault-secure-session').digest('hex');
+  };
 
   const cookies = {};
   const cookieHeader = req.headers.cookie;
@@ -32,7 +40,7 @@ export default function handler(req, res) {
 
     const action = body.action;
 
-    // LOGIN ACTION WITH 2FA PIN SUPPORT
+    // LOGIN ACTION
     if (action === 'login') {
       const submittedPass = body.password || body.pass;
       const submittedPin = body.pin || body.key;
@@ -45,10 +53,11 @@ export default function handler(req, res) {
       const pinValid = !envPin || submittedPin === envPin;
 
       if (passValid && pinValid) {
-        // 30-minute strict session cookie (1800 seconds)
+        const token = getSessionToken();
+        // Set cryptographically signed secure cookie valid for 30 minutes
         res.setHeader(
           'Set-Cookie',
-          'admin_session=authenticated; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=1800'
+          `admin_session=${token}; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=1800`
         );
         return res.status(200).json({ ok: true, success: true });
       } else {
@@ -65,9 +74,10 @@ export default function handler(req, res) {
       return res.status(200).json({ ok: true });
     }
 
-    // PROTECTED ACTIONS REQUIRE VALID SESSION COOKIE
-    if (cookies.admin_session !== 'authenticated') {
-      return res.status(401).json({ ok: false, error: "Unauthorized session" });
+    // VALIDATE CRYPTOGRAPHIC SESSION TOKEN
+    const expectedToken = getSessionToken();
+    if (!expectedToken || cookies.admin_session !== expectedToken) {
+      return res.status(401).json({ ok: false, error: "Unauthorized session or credentials updated." });
     }
 
     if (action === 'load') {
