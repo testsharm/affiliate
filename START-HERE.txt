@@ -1,0 +1,6 @@
+START HERE
+
+1. Open PROMPTPAD-SETUP-GUIDE.md and paste the whole thing into any AI assistant.
+2. Tell it: "Guide me through this one step at a time. I am not a coder."
+3. The website files are in the folder called promptpad. Upload the CONTENTS of that folder to GitHub (not the folder itself).
+4. Important: Vercel's free plan is for non-commercial use only. An affiliate site needs the paid Pro plan. See section 3 of the guide.

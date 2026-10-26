@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'self'; base-uri 'none'; form-action 'none'">
+<title>Admin</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,sans-serif;background:#F3F0FF;color:#1B1040;line-height:1.5;padding-bottom:96px}
+.w{max-width:760px;margin:0 auto;padding:16px;display:grid;gap:14px}
+h1{margin:0;font-size:22px}h2{margin:0;font-size:17px}
+.card{background:#fff;border:1px solid #DDD5FA;border-radius:18px;padding:18px;display:grid;gap:12px}
+label{display:grid;gap:5px;font-size:13px;color:#5E5589}
+input,select,textarea{font:inherit;font-size:16px;padding:13px;border:1px solid #DDD5FA;border-radius:12px;color:#1B1040;width:100%;background:#fff}
+textarea{min-height:150px}
+button{font:inherit;font-size:15px;font-weight:600;border:0;border-radius:12px;padding:13px 14px;background:#6A3DF0;color:#fff;cursor:pointer}
+button.g{background:#fff;color:#1B1040;border:1px solid #DDD5FA}button.d{background:#fff;color:#B42318;border:1px solid #F3C5C0}
+.r2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.r3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.it{border-top:1px solid #EEE9FF;padding-top:12px;display:grid;gap:10px}.it b{font-size:16px}.it small{color:#5E5589;display:block;word-break:break-all}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+#msg{position:sticky;top:8px;z-index:5;background:#1B1040;color:#fff;border-radius:12px;padding:12px 14px;font-size:14px}#msg:empty{display:none}
+#bar{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid #DDD5FA;padding:12px 16px calc(12px + env(safe-area-inset-bottom));display:flex;gap:10px;align-items:center;justify-content:center;z-index:9}
+#bar span{font-size:13px;color:#5E5589;flex:1;max-width:340px}#bar button{flex:none;min-width:170px}
+.hint{font-size:12.5px;color:#5E5589}.hide{display:none!important}
+</style></head><body>
+
+<div class="w" id="login">
+  <div class="card"><h1>Admin</h1><p class="hint">Private area. Enter your password.</p>
+    <label>Password<input id="pw" type="password" autocomplete="current-password"></label>
+    <button id="go">Log in</button><div id="lmsg" class="hint"></div></div>
+</div>
+
+<div class="w hide" id="app">
+  <div class="top"><h1>Your prompts <span id="cnt" class="hint"></span></h1><button class="g" id="out">Log out</button></div>
+  <div id="msg" role="status"></div>
+
+  <div class="card"><h2>Links to share</h2>
+    <div class="r2"><button class="g" data-c="home">Copy home link</button><button class="g" data-c="offer">Copy product page link</button></div>
+    <p class="hint">Each prompt below also has its own "Copy link". Put that link under the video it belongs to.</p></div>
+
+  <div class="card" id="form"><h2 id="ft">Add a prompt</h2>
+    <label>Title<input id="t" maxlength="80" placeholder="Funny character clip"></label>
+    <div class="r2"><label>Category<input id="c" maxlength="30" list="cl" placeholder="Video"></label>
+      <label>Works in<select id="tr"><option>AI video</option><option>AI image</option><option>Chat AI</option></select></label></div>
+    <datalist id="cl"></datalist>
+    <label>One-line description<input id="u" maxlength="140" placeholder="10-second vertical meme video."></label>
+    <label>The prompt (put [blanks] in square brackets)<textarea id="x" maxlength="20000" placeholder="Create a 10-second video of [scene]..."></textarea></label>
+    <label>Link name (made for you, a-z and dashes)<input id="id" maxlength="60"></label>
+    <p class="hint" id="lk"></p>
+    <div class="r2"><button id="add">Add to my list</button><button class="g" id="clr">Clear</button></div></div>
+
+  <div class="card"><h2>All prompts</h2><input id="q" type="search" placeholder="Search your prompts"><div id="list"></div></div>
+
+  <div class="card"><h2>Site settings</h2>
+    <label>Site name<input id="brand" maxlength="40"></label>
+    <label>ToolSuite affiliate link (starts with https://)<input id="link" inputmode="url"></label>
+    <label>Umami website ID (optional, for click stats)<input id="um"></label>
+    <label>Your Instagram / Telegram / YouTube link (optional)<input id="fo" inputmode="url"></label>
+    <label>Contact email (shown on the Terms and Privacy pages)<input id="ct" inputmode="email" maxlength="120"></label>
+    <label>Your country or state (for the Terms page)<input id="co" maxlength="80"></label></div>
+</div>
+
+<div id="bar" class="hide"><span id="st">All saved</span><button id="save">Save and publish</button></div>
+
+<script>
+const $=i=>document.getElementById(i);
+let D=null,SHA='',dirty=false,editing=-1;
+const api=async b=>{const r=await fetch('/api/admin',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json','X-Admin':'1'},body:JSON.stringify(b)});let j={};try{j=await r.json()}catch(e){}j.status=r.status;return j};
+const msg=t=>{$('msg').textContent=t||''};
+const slug=t=>t.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,60);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const today=()=>new Date().toISOString().slice(0,10);
+function mark(d){dirty=d;$('st').textContent=d?'You have unsaved changes':'All saved'}
+async function cp(t,b){try{await navigator.clipboard.writeText(t);msg('Copied: '+t)}catch(e){prompt('Copy this link:',t)}}
+
+function draw(){
+  const q=$('q').value.trim().toLowerCase();
+  $('cnt').textContent='('+D.prompts.length+')';
+  $('cl').innerHTML=[...new Set(['Video','Images','Ads','Research',...D.prompts.map(p=>p.c)])].map(c=>`<option value="${esc(c)}">`).join('');
+  $('list').innerHTML=D.prompts.map((p,i)=>({p,i})).filter(({p})=>!q||(p.t+p.c+p.id).toLowerCase().includes(q)).map(({p,i})=>
+   `<div class="it"><div><b>${esc(p.t)}</b><small>${esc(p.c)} · ${esc(p.tr)} · /#${esc(p.id)}</small></div>
+    <div class="r3"><button class="g" data-l="${i}">Copy link</button><button class="g" data-e="${i}">Edit</button><button class="g" data-v="${i}">Open</button></div>
+    <div class="r3"><button class="g" data-u="${i}">↑ Up</button><button class="g" data-w="${i}">↓ Down</button><button class="d" data-x="${i}">Delete</button></div></div>`).join('')||'<p class="hint">Nothing here yet.</p>';
+  $('brand').value=D.brand||'';$('link').value=(D.links||{}).toolsuite||'';$('um').value=(D.settings||{}).umami||'';$('fo').value=(D.settings||{}).follow||'';$('ct').value=(D.settings||{}).contact||'';$('co').value=(D.settings||{}).country||'';
+}
+function clearForm(){editing=-1;['t','c','u','x','id'].forEach(k=>$(k).value='');$('tr').value='AI video';$('id').dataset.lock='';$('ft').textContent='Add a prompt';$('add').textContent='Add to my list';$('lk').textContent=''}
+function uniq(id,skip){let b=id||'prompt',n=b,i=2;while(D.prompts.some((p,k)=>p.id===n&&k!==skip))n=b+'-'+i++;return n}
+$('t').oninput=()=>{if(!$('id').dataset.lock)$('id').value=slug($('t').value);showLink()};
+$('id').oninput=()=>{$('id').dataset.lock='1';showLink()};
+function showLink(){const id=slug($('id').value);$('lk').textContent=id?'Link: '+location.origin+'/#'+id:''}
+$('add').onclick=()=>{
+  const p={id:uniq(slug($('id').value||$('t').value),editing),c:$('c').value.trim()||'Video',t:$('t').value.trim(),u:$('u').value.trim(),tr:$('tr').value,x:$('x').value.trim(),d:editing>=0?(D.prompts[editing].d||''):today()};
+  if(!p.t||!p.u||!p.x)return msg('Please fill in the title, description and prompt.');
+  if(!p.d)delete p.d;
+  if(editing>=0){D.prompts[editing]=p;msg('Updated. Press "Save and publish" when you are done.')}else{D.prompts.unshift(p);msg('Added at the top. Press "Save and publish" when you are done.')}
+  clearForm();mark(true);draw()};
+$('clr').onclick=clearForm;
+$('list').onclick=e=>{const b=e.target.closest('button');if(!b)return;const a=b.dataset,P=D.prompts;
+  if(a.l!==undefined)return cp(location.origin+'/#'+P[+a.l].id);
+  if(a.v!==undefined)return open('/#'+P[+a.v].id,'_blank');
+  if(a.x!==undefined){if(confirm('Delete "'+P[+a.x].t+'"? Links to it will stop working.')){P.splice(+a.x,1);mark(true)}}
+  if(a.u!==undefined&&+a.u>0){const i=+a.u;[P[i-1],P[i]]=[P[i],P[i-1]];mark(true)}
+  if(a.w!==undefined&&+a.w<P.length-1){const i=+a.w;[P[i+1],P[i]]=[P[i],P[i+1]];mark(true)}
+  if(a.e!==undefined){const p=P[+a.e];editing=+a.e;['t','c','u','x','id'].forEach(k=>$(k).value=p[k]||'');$('tr').value=p.tr;$('id').dataset.lock='1';$('ft').textContent='Edit prompt';$('add').textContent='Update this prompt';showLink();$('form').scrollIntoView({behavior:'smooth'});return}
+  draw()};
+$('q').oninput=draw;
+document.querySelectorAll('[data-c]').forEach(b=>b.onclick=()=>cp(location.origin+(b.dataset.c==='offer'?'/#toolsuite':'/')));
+['brand','link','um','fo','ct','co'].forEach(k=>$(k).oninput=()=>mark(true));
+$('save').onclick=async()=>{
+  D.brand=$('brand').value.trim();D.links={toolsuite:$('link').value.trim()};D.settings={umami:$('um').value.trim(),follow:$('fo').value.trim(),contact:$('ct').value.trim(),country:$('co').value.trim()};
+  $('save').disabled=true;msg('Saving...');const r=await api({action:'save',data:D,sha:SHA});$('save').disabled=false;
+  if(r.ok){SHA=r.sha||SHA;mark(false);msg('Saved. Your site updates in about a minute.')}else if(r.status===401){msg('Your session ended. Log in again.');show(false)}else msg('Not saved: '+(r.error||'Something went wrong'))};
+async function load(){const r=await api({action:'load'});
+  if(r.status===401){show(false);return}
+  if(!r.data){$('lmsg').textContent=r.error||'Could not load';show(false);return}
+  D=r.data;SHA=r.sha;D.prompts=D.prompts||[];show(true);clearForm();draw();mark(false)}
+function show(on){$('login').classList.toggle('hide',on);$('app').classList.toggle('hide',!on);$('bar').classList.toggle('hide',!on)}
+$('go').onclick=async()=>{$('lmsg').textContent='Checking...';const r=await api({action:'login',password:$('pw').value});
+  if(r.ok){$('pw').value='';$('lmsg').textContent='';load()}else $('lmsg').textContent=r.error||'Could not log in'};
+$('pw').addEventListener('keydown',e=>{if(e.key==='Enter')$('go').click()});
+$('out').onclick=async()=>{await api({action:'logout'});D=null;show(false)};
+addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.returnValue=''}});
+load();
+</script></body></html>

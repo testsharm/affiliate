@@ -1,0 +1,120 @@
+{
+  "brand": "PromptPad",
+  "links": {
+    "toolsuite": "https://whop.com/toolsuite?a=kandelsharma"
+  },
+  "settings": {
+    "umami": "",
+    "follow": "",
+    "contact": "",
+    "country": ""
+  },
+  "prompts": [
+    {
+      "id": "meme-clip",
+      "c": "Video",
+      "t": "Funny character clip",
+      "u": "10-second vertical meme video.",
+      "tr": "AI video",
+      "x": "Create a 10-second vertical (9:16) video. Scene: [funny situation, e.g. a cat as a stressed manager]. Camera: slow push-in, quick cut at 5 seconds. Style: realistic, bright light, shallow depth of field. Exaggerated facial expressions, a comedic pause at the end. No text on screen."
+    },
+    {
+      "id": "city-flythrough",
+      "c": "Video",
+      "t": "Cinematic city fly-through",
+      "u": "Smooth b-roll for any niche.",
+      "tr": "AI video",
+      "x": "Cinematic drone shot flying through [city] at golden hour. Smooth forward motion, glowing windows, light haze, 35mm film look, subtle lens flare, highly detailed. 10 seconds, 24fps."
+    },
+    {
+      "id": "product-video",
+      "c": "Video",
+      "t": "Product ad from one photo",
+      "u": "Animate a product image into a short ad.",
+      "tr": "AI video",
+      "x": "Using the attached product photo, make an 8-second premium ad. The product rotates slowly on a clean [color] surface with soft rim lighting and floating particles. Gentle camera orbit. Final frame holds centered with space for a logo."
+    },
+    {
+      "id": "storyboard",
+      "c": "Video",
+      "t": "Shot-by-shot storyboard",
+      "u": "Plan a 30-second video.",
+      "tr": "Chat AI",
+      "x": "Create a 6-shot storyboard for a 30-second video about [topic]. For each shot give: visual description, camera movement, on-screen text and a voiceover line under 12 words. Tone: [friendly / bold / calm]."
+    },
+    {
+      "id": "thumbnail",
+      "c": "Images",
+      "t": "Bold thumbnail",
+      "u": "High-contrast 16:9 cover image.",
+      "tr": "AI image",
+      "x": "16:9 thumbnail. Subject: [person or object] with a surprised expression on the right third. Background: [color] gradient with soft glow. Bold 3-word text '[your text]' on the left in thick white font with dark outline. High contrast, sharp focus."
+    },
+    {
+      "id": "studio-photo",
+      "c": "Images",
+      "t": "Clean studio product photo",
+      "u": "Catalog-style image, no photoshoot.",
+      "tr": "AI image",
+      "x": "Professional studio photo of [product] on a [white / pastel / marble] background. Soft diffused light, natural shadow, centered composition, 4K, ecommerce catalog style. No text, no watermark."
+    },
+    {
+      "id": "lifestyle",
+      "c": "Images",
+      "t": "Lifestyle scene",
+      "u": "Show a product in everyday use.",
+      "tr": "AI image",
+      "x": "Candid lifestyle photo of a [age] [person] using [product] in a [bright kitchen / gym / office]. Natural window light, shallow depth of field, warm color grade, realistic skin texture."
+    },
+    {
+      "id": "logo-concept",
+      "d": "2026-10-24",
+      "c": "Images",
+      "t": "Logo concepts",
+      "u": "Quick brand directions to react to.",
+      "tr": "AI image",
+      "x": "Minimal vector logo concept for a brand called [name], a [type of business]. Simple geometric mark, [two colors], flat design, white background, centered, no mockup, no extra text."
+    },
+    {
+      "id": "ad-angles",
+      "c": "Ads",
+      "t": "10 ad angles",
+      "u": "Ideas to test in your next campaign.",
+      "tr": "Chat AI",
+      "x": "Act as a direct-response marketer. Product: [product]. Audience: [who]. Give 10 ad angles (pain point, curiosity, social proof, comparison, speed, price and others). For each: a one-line hook and a 25-word script."
+    },
+    {
+      "id": "description",
+      "c": "Ads",
+      "t": "Product description",
+      "u": "Short copy for a store page.",
+      "tr": "Chat AI",
+      "x": "Write a product description for [product]. Include a one-line headline, 3 benefit bullets (not features), one short paragraph on who it is for and a closing line. Tone: friendly and clear, no hype words. Max 120 words."
+    },
+    {
+      "id": "short-script",
+      "c": "Ads",
+      "t": "30-second video script",
+      "u": "Voiceover plus on-screen text.",
+      "tr": "Chat AI",
+      "x": "Write a 30-second vertical video script about [topic]. Structure: 3-second hook, the problem, a 3-step solution, call to action. Add on-screen text and b-roll ideas per line. Spoken style, short sentences."
+    },
+    {
+      "id": "ad-breakdown",
+      "c": "Research",
+      "t": "Competitor ad breakdown",
+      "u": "Learn what makes ads work.",
+      "tr": "Chat AI",
+      "x": "I will paste 3 competitor ads. For each, list the hook, the offer, the emotion it targets and why people stop scrolling. Then suggest a better version for [my product] and end with a summary table."
+    },
+    {
+      "id": "niche-check",
+      "d": "2026-10-24",
+      "c": "Research",
+      "t": "Niche idea checker",
+      "u": "Test an idea before spending money.",
+      "tr": "Chat AI",
+      "x": "I'm considering selling [product] to [audience]. List 5 reasons it could work, 5 risks, the 3 biggest competitors to check, and 5 questions to answer with real customer research before spending on ads."
+    }
+  ]
+}
