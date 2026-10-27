@@ -68,12 +68,12 @@
     },
     {
       "id": "logo-concept",
-      "d": "2026-10-24",
       "c": "Images",
       "t": "Logo concepts",
       "u": "Quick brand directions to react to.",
       "tr": "AI image",
-      "x": "Minimal vector logo concept for a brand called [name], a [type of business]. Simple geometric mark, [two colors], flat design, white background, centered, no mockup, no extra text."
+      "x": "Minimal vector logo concept for a brand called [name], a [type of business]. Simple geometric mark, [two colors], flat design, white background, centered, no mockup, no extra text.",
+      "d": "2026-10-24"
     },
     {
       "id": "ad-angles",
@@ -109,12 +109,12 @@
     },
     {
       "id": "niche-check",
-      "d": "2026-10-24",
       "c": "Research",
       "t": "Niche idea checker",
       "u": "Test an idea before spending money.",
       "tr": "Chat AI",
-      "x": "I'm considering selling [product] to [audience]. List 5 reasons it could work, 5 risks, the 3 biggest competitors to check, and 5 questions to answer with real customer research before spending on ads."
+      "x": "I'm considering selling [product] to [audience]. List 5 reasons it could work, 5 risks, the 3 biggest competitors to check, and 5 questions to answer with real customer research before spending on ads.",
+      "d": "2026-10-24"
     }
   ]
 }
