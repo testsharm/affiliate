@@ -79,7 +79,8 @@ module.exports = async (req, res) => {
   const send = (c, b) => { res.status(c).json(b); };
   res.setHeader('Cache-Control', 'no-store');
   res.setHeader('X-Content-Type-Options', 'nosniff');
-  if (!PASS || !SECRET || !TOKEN || !REPO) return send(500, { error: 'Not set up yet. Add the settings in Vercel (see the setup guide).' });
+  const missing = [['ADMIN_PASSWORD', PASS], ['SESSION_SECRET', SECRET], ['GITHUB_TOKEN', TOKEN], ['GITHUB_REPO', REPO]].filter(x => !x[1]).map(x => x[0]);
+  if (missing.length) return send(500, { error: 'Not set up yet. Missing in Vercel: ' + missing.join(', ') + '. Add them under Settings > Environment Variables, then Redeploy.' });
   if (req.method !== 'POST') return send(405, { error: 'Not allowed' });
   const origin = req.headers.origin;
   try { if (origin && new URL(origin).host !== req.headers.host) return send(403, { error: 'Blocked' }); } catch (e) { return send(403, { error: 'Blocked' }); }

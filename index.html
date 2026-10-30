@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'unsafe-inline' https://cloud.umami.is; connect-src 'self' https://cloud.umami.is https://api-gateway.umami.dev; img-src data:; base-uri 'none'; form-action 'none'">
+<meta name="theme-color" content="#1B1040">
 <title>Free AI Prompts + ToolSuite Review</title>
 <meta name="description" content="Free copy-ready AI prompts for video, images, ads and research, plus our pick: a look at ToolSuite based on its Whop listing.">
 <meta property="og:title" content="Free AI prompts + our pick: ToolSuite"><meta property="og:description" content="Copy-ready AI prompts for video, images and ads, plus a quick check of what your tools cost."><meta property="og:type" content="website">
@@ -170,10 +171,10 @@ dialog::backdrop{background:rgba(27,16,64,.6);backdrop-filter:blur(3px)}
 .chr{background:var(--paper);border-radius:20px;padding:24px;display:flex;flex-direction:column;gap:12px}
 .chr .cta{width:100%}
 .row3{display:grid;grid-template-columns:1fr 140px;gap:12px;align-items:center;font-weight:500;font-size:15px;margin-bottom:8px}
-.in{display:flex;align-items:center;background:#fff;border:1px solid var(--line);border-radius:10px;padding:0 10px}
-.in i{font-style:normal;color:var(--mut)}
-.in input{border:0;width:100%;padding:11px 6px;font:inherit;background:transparent;outline:0}
-.in:focus-within{border-color:var(--blue)}
+.amt{display:flex;align-items:center;background:#fff;border:1px solid var(--line);border-radius:10px;padding:0 10px}
+.amt i{font-style:normal;color:var(--mut)}
+.amt input{border:0;width:100%;padding:11px 6px;font:inherit;background:transparent;outline:0}
+.amt:focus-within{border-color:var(--blue)}
 .tot{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--line);padding-top:12px}
 .tot b{font-family:'Bricolage Grotesque',sans-serif;font-size:34px;font-weight:800}
 .chr .cm{font-size:14px;min-height:44px}
@@ -224,7 +225,7 @@ dialog::backdrop{background:rgba(27,16,64,.6);backdrop-filter:blur(3px)}
 
 .feats{list-style:none;padding:0;margin:18px 0 0;display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
 .feats li{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 10px;text-align:center;opacity:0;transform:translateY(16px);transition:opacity .5s,transform .5s}
-.feats.in li{opacity:1;transform:none}
+.feats.is-in li{opacity:1;transform:none}
 .feats li:nth-child(2){transition-delay:.08s}.feats li:nth-child(3){transition-delay:.16s}.feats li:nth-child(4){transition-delay:.24s}.feats li:nth-child(5){transition-delay:.32s}.feats li:nth-child(6){transition-delay:.4s}
 .feats b{display:block;font-family:'Bricolage Grotesque',sans-serif;font-size:24px;font-weight:800;color:var(--blue);line-height:1.1}
 .feats span{font-size:12.5px;color:var(--mut)}
@@ -274,7 +275,7 @@ dialog::backdrop{background:rgba(27,16,64,.6);backdrop-filter:blur(3px)}
 .pickc{animation:sl .8s .15s ease backwards}
 .vt{animation:vin .45s ease backwards}
 .rvl{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
-.rvl.in{opacity:1;transform:none}
+.rvl.is-in{opacity:1;transform:none}
 .card.rvl{transition:opacity .6s ease,transform .6s ease,border-color .2s,box-shadow .2s}
 .btns button:active,.cta:active{transform:scale(.98)}
 .fl{margin-bottom:12px}.fl a{color:var(--blue);font-weight:600;margin-right:6px}
@@ -287,7 +288,7 @@ body{overflow-x:clip;max-width:100%}
 *{-webkit-tap-highlight-color:transparent}
 img,svg,video{max-width:100%}
 .grid>*,.hero>*,.focus>*,.rvg>*,.chk>*,.rec>*,.bw>*{min-width:0}
-.card,.pickc,.fc,.cbox,.rec,.endcta,.stage{overflow-wrap:anywhere}
+.card,.pickc,.fc,.cbox,.rec,.endcta,.stage{overflow-wrap:break-word}
 button,.cta,.chip{min-height:48px}
 .x{min-height:44px;min-width:44px}
 .chip{display:inline-flex;align-items:center;padding:0 18px;transition:background .3s var(--ease),transform .3s var(--ease)}
@@ -315,8 +316,8 @@ input,select,textarea{font-size:16px}
 @keyframes pop2{from{transform:scale(0) rotate(-120deg)}to{transform:none}}
 /* motion: left-to-right slides, hardware accelerated */
 .rvl{opacity:0;transform:translate3d(-36px,0,0);transition:opacity .8s var(--ease),transform .95s var(--ease);transition-delay:calc(var(--i,0)*70ms);will-change:transform,opacity}
-.rvl.in{opacity:1;transform:none}
-.rvl.done{transition-delay:0s!important;will-change:auto}
+.rvl.is-in{opacity:1;transform:none}
+.rvl.is-done{transition-delay:0s!important;will-change:auto}
 .card.rvl{transition:opacity .8s var(--ease),transform .95s var(--ease),box-shadow .5s var(--ease)}
 @keyframes slx{from{opacity:0;transform:translate3d(-44px,0,0)}to{opacity:1;transform:none}}
 @keyframes slr{from{opacity:0;transform:translate3d(64px,0,0)}to{opacity:1;transform:none}}
@@ -326,7 +327,7 @@ input,select,textarea{font-size:16px}
 @property --a{syntax:'<angle>';inherits:false;initial-value:0deg}
 @keyframes spin{to{--a:360deg}}
 .card{border:1.5px solid transparent;background:linear-gradient(#fff,#fff) padding-box,linear-gradient(#DCE1EE,#DCE1EE) border-box}
-.card.in:hover{transform:translate3d(0,-5px,0) scale(1.012);box-shadow:0 30px 56px -28px rgba(106,61,240,.6);background:linear-gradient(#fff,#fff) padding-box,conic-gradient(from var(--a),#7C5CFF,#FF5CA8,#3DD6F5,#7C5CFF) border-box;animation:spin 4s linear infinite}
+.card.is-in:hover{transform:translate3d(0,-5px,0) scale(1.012);box-shadow:0 30px 56px -28px rgba(106,61,240,.6);background:linear-gradient(#fff,#fff) padding-box,conic-gradient(from var(--a),#7C5CFF,#FF5CA8,#3DD6F5,#7C5CFF) border-box;animation:spin 4s linear infinite}
 .pickc{border:1.5px solid transparent;background:linear-gradient(#fff,#fff) padding-box,conic-gradient(from var(--a),#7C5CFF,#FF5CA8,#3DD6F5,#7C5CFF) border-box;animation:slr 1.1s .15s var(--ease) backwards,spin 7s linear infinite}
 .cbox{border:1.5px solid transparent;background:linear-gradient(#fff,#fff) padding-box,conic-gradient(from var(--a),#7C5CFF,#FF5CA8,#FFC93C,#7C5CFF) border-box;animation:spin 6s linear infinite}
 .tc2{transition:transform .5s var(--ease),background .3s,border-color .3s}
@@ -379,125 +380,51 @@ dialog[open]::backdrop{animation:bd .45s ease}
   .stk{bottom:max(10px,env(safe-area-inset-bottom))}
   .tc2{min-width:216px}
 }
-@media(prefers-reduced-motion:reduce){.hl>*,.pickc,.cbox,.vt,.card.in:hover,dialog[open]{animation:none!important}.rvl{opacity:1!important;transform:none!important}}
-</style>
-<style>
-  /* ==================== SURGICAL DEEP MOBILE FIXES ==================== */
-  * { box-sizing: border-box !important; }
-  html, body { max-width: 100vw !important; overflow-x: hidden !important; }
+@media(prefers-reduced-motion:reduce){.hl>*,.pickc,.cbox,.vt,.card.is-in:hover,dialog[open]{animation:none!important}.rvl{opacity:1!important;transform:none!important}}
 
-  /* Premium Code Terminal Styling */
-  .prompt-content-box, pre, code {
-    background: rgba(10, 14, 23, 0.90) !important;
-    border: 1px solid rgba(255, 255, 255, 0.12) !important;
-    border-radius: 12px !important;
-    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.5) !important;
-    font-family: 'JetBrains Mono', 'Fira Code', monospace !important;
-    max-width: 100% !important;
-    overflow-x: auto !important;
-    white-space: pre-wrap !important;
-    word-break: break-word !important;
-  }
+/* ================= v3: real-phone fixes + dark terminal prompt boxes + calm bottom bar ================= */
+.pr,.rt{flex-wrap:wrap}
+.pr{justify-content:center;align-items:baseline;gap:2px 10px}
+.pr b,.tot b,.fc2 b{white-space:nowrap;flex:none;overflow-wrap:normal}
+.rt{justify-content:center;gap:2px 10px;text-align:center}
+.st5{white-space:nowrap;flex:none}
+.pickc .rt{justify-content:flex-start;text-align:left}
+.chr .src{font-size:12.5px;line-height:1.55}
+.cbox .pr b{font-size:clamp(34px,11vw,42px)}
+/* prompt boxes: dark terminal shell, no hard crop */
+.pv{position:relative;display:block;-webkit-line-clamp:unset;-webkit-box-orient:unset;max-height:178px;overflow:hidden;cursor:pointer;
+  font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;font-size:12.5px;line-height:1.75;color:#E7EAF6;white-space:pre-wrap;overflow-wrap:break-word;
+  background:linear-gradient(180deg,#10162A,#0A0E1B);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:36px 15px 15px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 14px 28px -18px rgba(10,14,27,.9);transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
+.pv::before{content:"";position:absolute;left:15px;top:14px;width:9px;height:9px;border-radius:50%;background:#FF5F57;box-shadow:15px 0 #FEBC2E,30px 0 #28C840}
+.pv::after{content:"";position:absolute;left:0;right:0;bottom:0;height:64px;background:linear-gradient(rgba(10,14,27,0),#0A0E1B 85%);pointer-events:none}
+.pvl{position:absolute;right:14px;top:10px;font:600 10.5px/1 Inter,system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#8E97B8}
+.pv:hover{transform:translate3d(0,-2px,0);box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 20px 34px -18px rgba(106,61,240,.55)}
+.pv .ph,.full .ph{background:rgba(139,92,246,.24);border:1px solid rgba(167,139,250,.5);color:#E9E2FF;border-radius:6px;padding:1px 6px;font-weight:500;box-shadow:none;white-space:normal}
+.full .ph.on{background:rgba(40,200,140,.18);border-color:rgba(70,220,160,.55);color:#BDF6DB}
+.full{font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;font-size:13.5px;line-height:1.9;letter-spacing:0;color:#E7EAF6;background:linear-gradient(180deg,#10162A,#0A0E1B);border:1px solid rgba(255,255,255,.1);box-shadow:inset 0 1px 0 rgba(255,255,255,.07);overflow-wrap:break-word}
+.full::-webkit-scrollbar{width:6px}.full::-webkit-scrollbar-thumb{background:rgba(255,255,255,.2);border-radius:6px}
+/* bottom bar: slim, and it slides away while you read downwards so it never covers the buttons */
+.stk{padding:8px 8px 8px 16px;border-radius:18px;gap:10px;transition:transform .55s var(--ease),opacity .4s ease;will-change:transform}
+.stk span{flex:1;min-width:0;font-size:13.5px;line-height:1.25}
+.stk small{font-size:11px}
+.stk .cta{min-height:44px;padding:0 18px;border-radius:14px;font-size:14px;white-space:nowrap}
+.stk.off{transform:translate3d(0,160%,0);opacity:0;pointer-events:none}
+@media(max-width:700px){body{padding-bottom:28px}footer{padding-bottom:28px}.pv{max-height:168px}}
+@media(prefers-reduced-motion:reduce){.stk,.pv{transition:none}}
 
-  /* Placeholder Badges */
-  .prompt-content-box span, .placeholder-badge {
-    background: rgba(139, 92, 246, 0.22) !important;
-    border: 1px solid rgba(167, 139, 250, 0.4) !important;
-    color: #ddd6fe !important;
-    padding: 2px 7px !important;
-    border-radius: 6px !important;
-    font-weight: 600 !important;
-  }
-
-  @media (max-width: 767px) {
-    /* Main Layout Viewport Containment */
-    body, main, section, .container, .app-wrapper {
-      padding-left: 14px !important;
-      padding-right: 14px !important;
-      padding-bottom: calc(105px + env(safe-area-inset-bottom)) !important;
-    }
-
-    /* Fix Cost Calculator Clipping */
-    .calculator-grid, div[class*="grid"] {
-      display: flex !important;
-      flex-direction: column !important;
-      width: 100% !important;
-      max-width: 100% !important;
-    }
-
-    /* Heading Text Responsiveness */
-    h1, h2, h3, .hero-title {
-      font-size: clamp(1.5rem, 6vw, 2.2rem) !important;
-      line-height: 1.25 !important;
-      word-break: break-word !important;
-    }
-
-    /* Touch Targets */
-    button, a.btn, input, select {
-      min-height: 46px !important;
-      touch-action: manipulation !important;
-    }
-  }
-  /* =================================================================== */
-</style>
-<style>
-  /* ==================== SURGICAL DEEP MOBILE FIXES ==================== */
-  * { box-sizing: border-box !important; }
-  html, body { max-width: 100vw !important; overflow-x: hidden !important; }
-
-  /* Premium Code Terminal Styling */
-  .prompt-content-box, pre, code {
-    background: rgba(10, 14, 23, 0.90) !important;
-    border: 1px solid rgba(255, 255, 255, 0.12) !important;
-    border-radius: 12px !important;
-    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.5) !important;
-    font-family: 'JetBrains Mono', 'Fira Code', monospace !important;
-    max-width: 100% !important;
-    overflow-x: auto !important;
-    white-space: pre-wrap !important;
-    word-break: break-word !important;
-  }
-
-  /* Placeholder Badges */
-  .prompt-content-box span, .placeholder-badge {
-    background: rgba(139, 92, 246, 0.22) !important;
-    border: 1px solid rgba(167, 139, 250, 0.4) !important;
-    color: #ddd6fe !important;
-    padding: 2px 7px !important;
-    border-radius: 6px !important;
-    font-weight: 600 !important;
-  }
-
-  @media (max-width: 767px) {
-    /* Main Layout Viewport Containment */
-    body, main, section, .container, .app-wrapper {
-      padding-left: 14px !important;
-      padding-right: 14px !important;
-      padding-bottom: calc(105px + env(safe-area-inset-bottom)) !important;
-    }
-
-    /* Fix Cost Calculator Clipping */
-    .calculator-grid, div[class*="grid"] {
-      display: flex !important;
-      flex-direction: column !important;
-      width: 100% !important;
-      max-width: 100% !important;
-    }
-
-    /* Heading Text Responsiveness */
-    h1, h2, h3, .hero-title {
-      font-size: clamp(1.5rem, 6vw, 2.2rem) !important;
-      line-height: 1.25 !important;
-      word-break: break-word !important;
-    }
-
-    /* Touch Targets */
-    button, a.btn, input, select {
-      min-height: 46px !important;
-      touch-action: manipulation !important;
-    }
-  }
-  /* =================================================================== */
+/* ================= v4: polish found by looking at every screen on a phone ================= */
+button,a,.chip,summary{touch-action:manipulation}
+.skel{height:300px;border-radius:18px;background:linear-gradient(100deg,#E9ECF6 30%,#F6F7FC 50%,#E9ECF6 70%);background-size:200% 100%;animation:shim 1.3s linear infinite}
+@keyframes shim{to{background-position:-200% 0}}
+.fields{margin-top:2px}
+.ab .cta{padding:0 16px;font-size:15px;gap:8px;white-space:nowrap;min-height:50px}
+.ab b{line-height:1.3}
+@media(max-width:700px){
+  .bw{gap:8px;padding-top:12px;padding-bottom:12px}.bl b{font-size:17px}.bp{font-size:14px;line-height:1.4}.br{gap:8px}.br .cta{min-height:50px}
+  .fc .fields{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){.skel{animation:none}}
 </style>
 </head>
 <body>
@@ -561,7 +488,7 @@ dialog[open]::backdrop{animation:bd .45s ease}
     </section>
     <div id="promptsec">
     <div class="sec" id="prompts"><h2 id="stt">All prompts</h2><span id="sc"></span></div>
-    <div class="grid" id="grid"></div>
+    <div class="grid" id="grid"><div class="skel"></div><div class="skel"></div><div class="skel"></div></div>
     </div>
 
     <section class="chk" id="check" aria-labelledby="chh">
@@ -735,12 +662,16 @@ function buildWall(){
   const f=fill(FEATS).map(([b,t])=>`<div class="fc2" role="listitem"><b>${esc(b)}</b><span>${esc(t)}</span></div>`).join('');
   $('#mq4').innerHTML=`<div class="mqi">${f}</div><div class="mqi" aria-hidden="true">${f}</div>`;
 }
-let stkOff=false;
-addEventListener('scroll',()=>{$('#stk').hidden=stkOff||scrollY<500},{passive:true});
+let stkOff=false,lastY=scrollY,firstShow=true;
+const stk=$('#stk');
+addEventListener('scroll',()=>{const y=scrollY,d=y-lastY;lastY=y;
+  if(stkOff||y<400){stk.hidden=true;return}
+  if(stk.hidden){stk.hidden=false;if(firstShow){firstShow=false;stk.classList.remove('off');setTimeout(()=>stk.classList.add('off'),4000)}else stk.classList.add('off')}
+  if(d>8)stk.classList.add('off');else if(d<-8)stk.classList.remove('off')},{passive:true});
 $('#stx').onclick=()=>{stkOff=true;$('#stk').hidden=true};
 $('#logo').textContent=BRAND;document.title=BRAND+' – free AI prompts and our pick';
-const io='IntersectionObserver' in window?new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const t=e.target;t.classList.add('in');io.unobserve(t);setTimeout(()=>t.classList.add('done'),1500)}}),{threshold:.06}):null;
-function rv(){document.querySelectorAll('.rvl:not(.in)').forEach(el=>io?io.observe(el):el.classList.add('in'))}
+const io='IntersectionObserver' in window?new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const t=e.target;t.classList.add('is-in');io.unobserve(t);setTimeout(()=>t.classList.add('is-done'),1500)}}),{threshold:.06}):null;
+function rv(){document.querySelectorAll('.rvl:not(.is-in)').forEach(el=>io?io.observe(el):el.classList.add('is-in'))}
 document.addEventListener('pointerdown',e=>{const b=e.target.closest('.cta,.btns button,.more,.sec2');if(!b)return;const r=b.getBoundingClientRect(),d=Math.max(r.width,r.height)*1.5,sp=document.createElement('span');sp.className='rip';sp.style.cssText=`width:${d}px;height:${d}px;left:${e.clientX-r.left-d/2}px;top:${e.clientY-r.top-d/2}px`;b.append(sp);setTimeout(()=>sp.remove(),700)},{passive:true});
 const track=(n,d)=>{try{if(window.umami)umami.track(n,d)}catch(e){}};
 if(UMAMI_ID){const s=document.createElement('script');s.defer=true;s.src='https://cloud.umami.is/script.js';s.dataset.websiteId=UMAMI_ID;document.head.append(s)}
@@ -756,7 +687,7 @@ const CAT2G={Video:"AI video",Images:"Design & content",Ads:"Ecom ads",Research:
 const PRICE=29.95;let goal="AI video";const paid={};
 function renderCheck(){
   $('#goals').innerHTML=Object.keys(GOALS).map(g=>`<button class="chip" data-g="${esc(g)}" aria-pressed="${g===goal}">${esc(g)}</button>`).join('');
-  $('#rows').innerHTML=GOALS[goal].map(n=>`<label class="row3"><span>${esc(n)}</span><span class="in"><i>$</i><input type="number" min="0" max="9999" step="0.01" inputmode="decimal" data-n="${esc(n)}" value="${paid[n]??''}" placeholder="0" aria-label="Monthly cost of ${esc(n)}"></span></label>`).join('');
+  $('#rows').innerHTML=GOALS[goal].map(n=>`<label class="row3"><span>${esc(n)}</span><span class="amt"><i>$</i><input type="number" min="0" max="9999" step="0.01" inputmode="decimal" data-n="${esc(n)}" value="${paid[n]??''}" placeholder="0" aria-label="Monthly cost of ${esc(n)}"></span></label>`).join('');
   calc();
 }
 function calc(){
@@ -782,7 +713,7 @@ function draw(){
   if(!l.length){grid.innerHTML='<p style="grid-column:1/-1;color:var(--mut);padding:36px 0;text-align:center">No prompts match. Try another word or choose All.</p>';return}
   const h=l.map((p,ix)=>{const n=(p.x.match(/\S+/g)||[]).length,b=(p.x.match(/\[[^\]]+\]/g)||[]).length;return `<article class="card rvl" id="${p.id}" style="--i:${ix%6}">
    <div class="ch"><div class="ic" style="background:${col[p.c]||'#6A3DF0'}"><svg viewBox="0 0 24 24" aria-hidden="true">${ico[p.c]||ico.Research}</svg></div><div><small>${p.c} · ${esc(p.tr)}</small><h3><a href="#${p.id}">${esc(p.t)}</a>${isNew(p)?'<span class="seen" style="background:#FFF3CC;color:#7A5A00">New</span>':''}${seen.includes(p.id)?'<span class="seen">Viewed</span>':''}</h3></div></div>
-   <p class="use">${esc(p.u)}</p><div class="pv">${hl(p.x)}</div><p class="meta">${n} words · ${b} blanks to fill</p>
+   <p class="use">${esc(p.u)}</p><div class="pv" data-v="${p.id}" role="button" tabindex="0" aria-label="Open the full prompt"><span class="pvl">prompt</span>${hl(p.x)}</div><p class="meta">${n} words · ${b} blanks to fill</p>
    <div class="btns"><button data-v="${p.id}">Preview</button><button class="cp" data-k="${p.id}">Copy prompt</button></div><div class="abx" data-id="${p.id}" hidden></div></article>`});
   const at=fp?3:6;
   if(l.length>=at&&!t)h.splice(at,0,`<section class="rec"><div><span class="badge">Recommended for these prompts</span><h3>Run them in more tools for less</h3>
@@ -818,7 +749,7 @@ function renderFocus(p){
   const run=RUN[p.tr]||[],fu=/^https:\/\//.test(FOLLOW_URL)?FOLLOW_URL:'';
   $('#focus').innerHTML=`<div><a class="back" href="#">← All prompts</a>
    <div class="fc"><small style="color:var(--mut)">${esc(p.c)} · ${esc(p.tr)}</small><h1>${esc(p.t)}</h1><p class="use">${esc(p.u)}</p>
-   <div class="pmeta" id="fmeta"></div><div class="fields" id="ff"></div><div class="full" id="fpv"></div>
+   <div class="pmeta" id="fmeta"></div><div class="full" id="fpv"></div><div class="fields" id="ff"></div>
    <button class="cp" id="fcp">Copy prompt</button>
    <button class="sec2" id="fsh">Copy link to this prompt</button>
    <div class="abx" id="fab"></div>
